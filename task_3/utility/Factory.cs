@@ -5,21 +5,23 @@ using WebDriverManager.DriverConfigs.Impl;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Chrome;
 using task_3.config;
-using static task_3.parser.EtcParsing;
+using task_3.parser;
+using System.Configuration;
+using System.Collections.Specialized;
 
 namespace task_3.pages
 {
     class Factory
     {
-        private static string browserName = Parser("input_data/browser");
-        private static string language = Parser("input_data/language");
-        private static string browserNames = Parser("browser_names/FireFox_names");
+        //private static string browserNames = Parser("browser_names/FireFox_names");
         private static IWebDriver driver = null;
         public static IWebDriver CreateDriver()
         {
+            string browserName = ConfigurationManager.AppSettings.Get("browser");
+            string language = ConfigurationManager.AppSettings.Get("language");
+
             if (browserName.Equals("FireFox"))
             {
-                Console.WriteLine(browserNames);
                 var options = new FirefoxOptions();
                 options.SetPreference("intl.accept_languages", language);
                 new DriverManager().SetUpDriver(new FirefoxConfig());

@@ -19,7 +19,6 @@ namespace task_3.pages
         {
             if (browserName.Equals("FireFox"))
             {
-                Console.WriteLine(browserNames);
                 var options = new FirefoxOptions();
                 options.SetPreference("intl.accept_languages", language);
                 new DriverManager().SetUpDriver(new FirefoxConfig());

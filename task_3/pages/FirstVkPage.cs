@@ -1,31 +1,37 @@
 ﻿using OpenQA.Selenium;
-using System;
+using System.Configuration;
 using task_3.config;
-using static task_3.parser.EtcParsing;
+using task_3.parser;
 
 namespace task_3.pages
 {
     public class FirstVkPage
     {
-        private static string logIn = Parser("test_user/email");
-        private static string passWord = Parser("test_user/password");
-        private static string url = Parser("input_data/url");
-        private static string ownerId = Parser("test_user/owner_id");
-        
-        public void InsertLogin(IWebDriver driver)
+        private IWebDriver driver;
+        //private EtcParsing parser = new EtcParsing();
+        private ConfPage fluent = new ConfPage();
+
+        public FirstVkPage(IWebDriver driver)
         {
-            ConfPage.FluentWait(driver, "//input[@id='index_email']").SendKeys(logIn);
+            this.driver = driver; 
         }
-        public void InsertPassword(IWebDriver driver)
+        public void InsertLogin()
         {
-            ConfPage.FluentWait(driver, "//input[@id='index_pass']").SendKeys(passWord);
+            string logIn = EtcParsing.Parser("email");
+            fluent.Wait(driver, "//input[@id='index_email']").SendKeys(logIn);
         }
-        public void ClickButtonSignIn(IWebDriver driver)
+        public void InsertPassword()
         {
-            ConfPage.FluentWait(driver, "//button[@id='index_login_button']").Submit();
+            string passWord = EtcParsing.Parser("password");
+            fluent.Wait(driver, "//input[@id='index_pass']").SendKeys(passWord);
         }
-        public static void VkCom(IWebDriver driver)
+        public void ClickButtonSignIn()
         {
+            fluent.Wait(driver, "//button[@id='index_login_button']").Submit();
+        }
+        public void VkCom()
+        {
+            string url = ConfigurationManager.AppSettings.Get("url");
             driver.Navigate().GoToUrl(url);
         }
     }
