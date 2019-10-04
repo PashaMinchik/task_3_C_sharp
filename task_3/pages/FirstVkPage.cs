@@ -8,8 +8,10 @@ namespace task_3.pages
     public class FirstVkPage
     {
         private IWebDriver driver;
-        //private EtcParsing parser = new EtcParsing();
         private ConfPage fluent = new ConfPage();
+        private static ParserEtcApi parser = new ParserEtcApi();
+        private string email = parser.GetEmail();
+        private string passWord = parser.GetPassword();
 
         public FirstVkPage(IWebDriver driver)
         {
@@ -17,12 +19,10 @@ namespace task_3.pages
         }
         public void InsertLogin()
         {
-            string logIn = EtcParsing.Parser("email");
-            fluent.Wait(driver, "//input[@id='index_email']").SendKeys(logIn);
+            fluent.Wait(driver, "//input[@id='index_email']").SendKeys(email);
         }
         public void InsertPassword()
         {
-            string passWord = EtcParsing.Parser("password");
             fluent.Wait(driver, "//input[@id='index_pass']").SendKeys(passWord);
         }
         public void ClickButtonSignIn()

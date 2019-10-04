@@ -1,6 +1,7 @@
 ﻿using System;
 using OpenQA.Selenium;
 using task_3.config;
+using task_3.vkapi;
 //using task_3.assertions;
 //using task_3.vkapi;
 
@@ -9,28 +10,21 @@ namespace task_3.pages
     public class SecondPostPage
     {
         private ConfPage fluent = new ConfPage();
-        //private IWebDriver driver;
-        //private Assertions assert = new Assertions();
-        //private VkApiUtils vk = new VkApiUtils();
-
-        //public SecondPostPage(IWebDriver driver)
-        //{
-        //    this.driver = driver;
-        //}
+        private VkApiUtils vk = new VkApiUtils();
         public string CheckPost(IWebDriver driver)
         {
             string a = fluent.Wait(driver, "//div[@class='wall_post_text zoom_text']").GetAttribute("innerText");
             return a;
         }
-        //public bool VisibleElement(IWebDriver driver, string text)
-        //{
-        //    //bool a = ConfPage.FluentWait(driver, "//div[contains(text(), s)]").Displayed;
-        //    string path = "//div[contains(text(), 'value')]";
-        //    string xpath = path.Replace("value", text);
-        //    bool a = ConfPage.FluentWait(driver, xpath).Displayed;
-        //    Console.WriteLine("Элемент виден?: " + a);
-        //    return a;
-        //}
+        public bool VisibleElement(IWebDriver driver, string text)
+        {
+            //bool a = ConfPage.FluentWait(driver, "//div[contains(text(), s)]").Displayed;
+            string path = "//div[contains(text(), 'value')]";
+            string xpath = path.Replace("value", text);
+            bool a = fluent.Wait(driver, xpath).Displayed;
+            Console.WriteLine("Элемент виден?: " + a);
+            return a;
+        }
         public string CheckPostEdit(IWebDriver driver)
         {
             string a = fluent.Wait(driver, "//div[@class='wall_post_text']").GetAttribute("innerText");
@@ -60,6 +54,19 @@ namespace task_3.pages
             string a = fluent.Wait(driver, "//div[@class='reply_content']//a[@class='author']").GetAttribute("data-from-id");
             Console.WriteLine(a + " data-from-id пользователя, что оставил комментарий");
             return a;
+        }
+        public void AddLike(string postId)
+        {
+            vk.AddLike("likes.add", "post", postId);
+        }
+
+        public void CheckLike(string postId)
+        {
+            vk.CheckLike("likes.isLiked", "post", postId);
+        }
+        public void DeletePost(string postId)
+        {
+            vk.DeletePost("wall.delete", postId);
         }
     }
 }

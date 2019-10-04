@@ -113,11 +113,11 @@
     <Compile Include="config\ConfTests.cs" />
     <Compile Include="pages\SecondPostPage.cs" />
     <Compile Include="pages\FirstVkPage.cs" />
+    <Compile Include="parser\EtcApiPars.cs" />
     <Compile Include="utility\Singleton.cs" />
     <Compile Include="utility\Factory.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="parser\EtcParsing.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="vkapi\ParserVkApi.cs" />
@@ -126,9 +126,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="etc.xml" />
+    <None Include="EtcApi.json" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

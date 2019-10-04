@@ -6,12 +6,12 @@ namespace task_3.vkapi
 {
     public class VkApiUtils
     {
-        //private static EtcParsing parser = new EtcParsing();
-        private string ownerId = EtcParsing.Parser("owner_id");
-        private string accessToken = EtcParsing.Parser("token");
+        private static ParserEtcApi parser = new ParserEtcApi();
+        private string ownerId = parser.GetOwnerId();
+        private string accessToken = parser.GetToken();
         private string vkVersion = "5.101";
-        private string urlApi = EtcParsing.Parser("url_API");
-        private ParserVkApi file = new ParserVkApi();
+        private string urlApi = parser.GetUrlApi();
+        //private ParserVkApi file = new ParserVkApi();
 
         internal static string textOnTheWall = GetRandom();
 
@@ -54,12 +54,13 @@ namespace task_3.vkapi
         }
 
         //Добавление комментария
-        public void AddComment(string methodName, string parameters, string postId)
+        public string AddComment(string methodName, string parameters, string postId)
         {
             string textComment = GetRandom();
             System.Net.WebRequest req = System.Net.WebRequest.Create(urlApi + methodName + "?" + "owner_id=" + ownerId + "&" + "post_id" + "=" + postId + "&" + parameters + "=" + textComment + "&" + "access_token=" + accessToken + "&" + "v=" + vkVersion);
             req.GetResponse();
             Console.WriteLine(textComment + " Текст комментария");
+            return textComment;
         }
 
         //Добавление лайка
@@ -92,7 +93,7 @@ namespace task_3.vkapi
 
 
         // Постинг файла на стену
-        public string GetUploadServer(string methodName)
+        public string GetUrlServer(string methodName)
         {
             System.Net.WebRequest req = System.Net.WebRequest.Create(urlApi + methodName + "?" + "access_token=" + accessToken + "&" + "v=" + vkVersion);
             System.Net.WebResponse resp = req.GetResponse();
