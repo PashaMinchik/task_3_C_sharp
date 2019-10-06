@@ -45,7 +45,7 @@ namespace task_3.pages
         public int CheckComment(IWebDriver driver)
         {
             string a = fluent.Wait(driver, "//div[contains(@class,'like_wrap')]//a[contains(@class, 'like_btn comment')]").GetAttribute("data-count");
-            int count = Int32.Parse(a);
+            int count = int.Parse(a);
             Console.WriteLine(count + " количество комментариев");
             return count;
         }

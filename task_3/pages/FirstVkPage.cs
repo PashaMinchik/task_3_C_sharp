@@ -10,12 +10,12 @@ namespace task_3.pages
         private IWebDriver driver;
         private ConfPage fluent = new ConfPage();
         private static ParserEtcApi parser = new ParserEtcApi();
-        private string email = parser.GetEmail();
-        private string passWord = parser.GetPassword();
+        private string email = parser.GetParameter("email");
+        private string passWord = parser.GetParameter("password");
 
         public FirstVkPage(IWebDriver driver)
         {
-            this.driver = driver; 
+            this.driver = driver;
         }
         public void InsertLogin()
         {

@@ -1,9 +1,6 @@
 C:\Users\p.minchik\source\repos\task_3\task_3\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
 C:\Users\p.minchik\source\repos\task_3\task_3\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
 C:\Users\p.minchik\source\repos\task_3\task_3\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
-C:\Users\p.minchik\source\repos\task_3\task_3\bin\Debug\ru\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.resources.dll
-C:\Users\p.minchik\source\repos\task_3\task_3\bin\Debug\ru\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.resources.dll
-C:\Users\p.minchik\source\repos\task_3\task_3\bin\Debug\ru\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
 C:\Users\p.minchik\source\repos\task_3\task_3\bin\Debug\utility\Factory.cs
 C:\Users\p.minchik\source\repos\task_3\task_3\bin\Debug\task_3.exe.config
 C:\Users\p.minchik\source\repos\task_3\task_3\bin\Debug\task_3.exe

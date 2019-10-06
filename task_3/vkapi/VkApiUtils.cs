@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Net;
 using task_3.parser;
 
 namespace task_3.vkapi
@@ -7,26 +9,26 @@ namespace task_3.vkapi
     public class VkApiUtils
     {
         private static ParserEtcApi parser = new ParserEtcApi();
-        private string ownerId = parser.GetOwnerId();
-        private string accessToken = parser.GetToken();
-        private string vkVersion = "5.101";
-        private string urlApi = parser.GetUrlApi();
-        //private ParserVkApi file = new ParserVkApi();
+        private string ownerId = parser.GetParameter("ownerId");
+        protected static string token = parser.GetParameter("token");
+        //private string apiVersion = parser.GetParameter("apiVersion");
+        protected static string apiVersion = "5.101";
+        protected static string urlApi = parser.GetParameter("urlApi");
 
         internal static string textOnTheWall = GetRandom();
 
         // Постинг записи
         public string WallPost(string methodName, string parameters)
         {
-            System.Net.WebRequest req = System.Net.WebRequest.Create(urlApi + methodName + "?" + "owner_id=" + ownerId + "&" + parameters + "=" + textOnTheWall + "&" + "access_token=" + accessToken + "&" + "v=" + vkVersion);
-            System.Net.WebResponse resp = req.GetResponse();
+            WebRequest req = WebRequest.Create(urlApi + methodName + "?" + "owner_id=" + ownerId + "&" + parameters + "=" + textOnTheWall + "&" + "access_token=" + token + "&" + "v=" + apiVersion);
+            //WebRequest req = WebRequest.Create(https://api.vk.com/method/wall.post?owner_id=381108928&message=textOnTheWall&access_token=1b3e1a6668a3cf952a48c40900e2e6672f27919b2bdb4e663ab24eb42300776a80fc388001bd30a5653c3&v=5.101);
+            WebResponse resp = req.GetResponse();
 
-            System.IO.Stream stream = resp.GetResponseStream();                     // Получение json ответа 
-            System.IO.StreamReader sr = new System.IO.StreamReader(stream);
+            Stream stream = resp.GetResponseStream();                     // Получение json ответа 
+            StreamReader sr = new StreamReader(stream);
             string Out = sr.ReadToEnd();
 
-            int value;                                                             // Получение значения id и перевод его в строковое значение
-            int.TryParse(string.Join("", Out.Where(c => char.IsDigit(c))), out value);
+            int.TryParse(string.Join("", Out.Where(c => char.IsDigit(c))), out int value);      // Получение значения id и перевод его в строковое значение
             string postId = value.ToString();
 
             Console.WriteLine(value + " айди поста");
@@ -39,7 +41,7 @@ namespace task_3.vkapi
         public string WallEdit(string methodName, string parameters, string postId, string attachment, string attachmentId)
         {
             string textEdit = GetRandom();
-            System.Net.WebRequest req = System.Net.WebRequest.Create(urlApi + methodName + "?" + "owner_id=" + ownerId + "&" + "post_id" + "=" + postId + "&" + "attachments" + "=" + attachment + ownerId + "_" + attachmentId + textEdit + "&" + parameters + "=" + textEdit + "&" + "access_token=" + accessToken + "&" + "v=" + vkVersion);
+            WebRequest req = WebRequest.Create(urlApi + methodName + "?" + "owner_id=" + ownerId + "&" + "post_id" + "=" + postId + "&" + "attachments" + "=" + attachment + ownerId + "_" + attachmentId + textEdit + "&" + parameters + "=" + textEdit + "&" + "access_token=" + token + "&" + "v=" + apiVersion);
             req.GetResponse();
             Console.WriteLine(textEdit + " Текст после изменения");
             return textEdit;
@@ -57,7 +59,7 @@ namespace task_3.vkapi
         public string AddComment(string methodName, string parameters, string postId)
         {
             string textComment = GetRandom();
-            System.Net.WebRequest req = System.Net.WebRequest.Create(urlApi + methodName + "?" + "owner_id=" + ownerId + "&" + "post_id" + "=" + postId + "&" + parameters + "=" + textComment + "&" + "access_token=" + accessToken + "&" + "v=" + vkVersion);
+            WebRequest req = WebRequest.Create(urlApi + methodName + "?" + "owner_id=" + ownerId + "&" + "post_id" + "=" + postId + "&" + parameters + "=" + textComment + "&" + "access_token=" + token + "&" + "v=" + apiVersion);
             req.GetResponse();
             Console.WriteLine(textComment + " Текст комментария");
             return textComment;
@@ -66,70 +68,31 @@ namespace task_3.vkapi
         //Добавление лайка
         public void AddLike(string methodName, string type, string postId)
         {
-            System.Net.WebRequest req = System.Net.WebRequest.Create(urlApi + methodName + "?" + "type=" + type + "&" +"owner_id=" + ownerId + "&" + "item_id" + "=" + postId + "&" + "access_token=" + accessToken + "&" + "v=" + vkVersion);
+            WebRequest req = WebRequest.Create(urlApi + methodName + "?" + "type=" + type + "&" + "owner_id=" + ownerId + "&" + "item_id" + "=" + postId + "&" + "access_token=" + token + "&" + "v=" + apiVersion);
             req.GetResponse();
         }
 
         //Проверка лайка
         public void CheckLike(string methodName, string type, string postId)
         {
-            System.Net.WebRequest req = System.Net.WebRequest.Create(urlApi + methodName + "?" + "type=" + type + "&" + "owner_id=" + ownerId + "&" + "item_id" + "=" + postId + "&" + "access_token=" + accessToken + "&" + "v=" + vkVersion);
-            System.Net.WebResponse resp = req.GetResponse();
+            WebRequest req = WebRequest.Create(urlApi + methodName + "?" + "type=" + type + "&" + "owner_id=" + ownerId + "&" + "item_id" + "=" + postId + "&" + "access_token=" + token + "&" + "v=" + apiVersion);
+            WebResponse resp = req.GetResponse();
 
-            System.IO.Stream stream = resp.GetResponseStream();                     // Получение json ответа 
-            System.IO.StreamReader sr = new System.IO.StreamReader(stream);
+            Stream stream = resp.GetResponseStream();                     // Получение json ответа 
+            StreamReader sr = new StreamReader(stream);
             string Out = sr.ReadToEnd();
 
             Console.WriteLine(Out);
+            sr.Close();
         }
 
         //Удаление нашего поста
         public void DeletePost(string methodName, string postId)
         {
-            System.Net.WebRequest req = System.Net.WebRequest.Create(urlApi + methodName + "?" + "owner_id=" + ownerId + "&" + "post_id" + "=" + postId + "&" + "access_token=" + accessToken + "&" + "v=" + vkVersion);
+            WebRequest req = WebRequest.Create(urlApi + methodName + "?" + "owner_id=" + ownerId + "&" + "post_id" + "=" + postId + "&" + "access_token=" + token + "&" + "v=" + apiVersion);
             req.GetResponse();
         }
 
-
-
-        // Постинг файла на стену
-        public string GetUrlServer(string methodName)
-        {
-            System.Net.WebRequest req = System.Net.WebRequest.Create(urlApi + methodName + "?" + "access_token=" + accessToken + "&" + "v=" + vkVersion);
-            System.Net.WebResponse resp = req.GetResponse();
-
-            System.IO.Stream stream = resp.GetResponseStream();                     // Получение json ответа 
-            System.IO.StreamReader sr = new System.IO.StreamReader(stream);
-            string Out = sr.ReadToEnd();
-
-            Console.WriteLine(Out + "  Весь ответ");
-            sr.Close();
-            return Out;
-        }
-        //public string UploadFileToServer()
-        //{
-        //    string uploadUrl = file.GetUploadUrl();
-        //    string pathToFile = @"C:\Users\p.minchik\Desktop\svinka.png";
-        //    var cookies = new CookieContainer();
-        //    ServicePointManager.Expect100Continue = false;
-        //
-        //    var request = (HttpWebRequest)WebRequest.Create(uploadUrl);
-        //    request.CookieContainer = cookies;
-        //    request.Method = "POST";
-        //    request.ContentType = "application/x-www-form-urlencoded";
-        //    using (var requestStream = request.GetRequestStream())
-        //    using (var writer = new StreamWriter(requestStream))
-        //    {
-        //        writer.Write("&photo=" + pathToFile);
-        //    }
-        //
-        //    using (var responseStream = request.GetResponse().GetResponseStream())
-        //    using (var reader = new StreamReader(responseStream))
-        //    {
-        //        var result = reader.ReadToEnd();
-        //        Console.WriteLine(result);
-        //        return result;
-        //    }
-        //}
     }
+
 }

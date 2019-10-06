@@ -12,9 +12,11 @@ namespace Tests
     public class UnitTest1
     {
         private static IWebDriver driver = Singleton.GetDriver();
+        private ConfTests confTest = new ConfTests(driver);
         private FirstVkPage signInPage = new FirstVkPage(driver);
         private SecondPostPage secondPage = new SecondPostPage();
         private Assertions assertOfSecondPage = new Assertions(driver);
+        private ParserVkApi vk = new ParserVkApi();
 
         [TestInitialize]
         public void Initialize()
@@ -25,22 +27,23 @@ namespace Tests
         [TestMethod]
         public void TestApiVk()
         {
-            signInPage.InsertLogin();
-            signInPage.InsertPassword();
-            signInPage.ClickButtonSignIn();
-            string postId = assertOfSecondPage.PostOnTheWallAndCheckText();
-            assertOfSecondPage.EditPostAndCheck(postId);
-            assertOfSecondPage.AddCommentAndCheck(postId);
-            secondPage.AddLike(postId);
-            secondPage.CheckLike(postId);
-            secondPage.DeletePost(postId);
+            vk.SavePicture("photos.saveWallPhoto");
+            //signInPage.InsertLogin();
+            //signInPage.InsertPassword();
+            //signInPage.ClickButtonSignIn();
+            //string postId = assertOfSecondPage.PostOnTheWallAndCheckText();
+            //assertOfSecondPage.EditPostAndCheck(postId);
+            //assertOfSecondPage.AddCommentAndCheck(postId);
+            //secondPage.AddLike(postId);
+            //secondPage.CheckLike(postId);
+            //secondPage.DeletePost(postId);
         }
 
         [TestCleanup]
         public void CleanUp()
         {
-            //confTest.Exit(driver);
-            //driver = null;
+            confTest.Exit();
+            driver = null;
         }
     }
 }
