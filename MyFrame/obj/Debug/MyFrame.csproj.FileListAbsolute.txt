@@ -1,6 +1,0 @@
-C:\Users\p.minchik\source\repos\task_3\MyFrame\bin\Debug\MyFrame.exe.config
-C:\Users\p.minchik\source\repos\task_3\MyFrame\bin\Debug\MyFrame.exe
-C:\Users\p.minchik\source\repos\task_3\MyFrame\bin\Debug\MyFrame.pdb
-C:\Users\p.minchik\source\repos\task_3\MyFrame\obj\Debug\MyFrame.csprojAssemblyReference.cache
-C:\Users\p.minchik\source\repos\task_3\MyFrame\obj\Debug\MyFrame.exe
-C:\Users\p.minchik\source\repos\task_3\MyFrame\obj\Debug\MyFrame.pdb
