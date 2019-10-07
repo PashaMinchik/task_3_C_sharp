@@ -112,7 +112,7 @@ namespace task_3.vkapi
             sr.Close();
             OtvetForList Otvet = JsonConvert.DeserializeObject<OtvetForList>(Out);
             Console.WriteLine(Otvet.response[0].id);
-            return Out;
+            return Otvet.response[0].id;
         }
     }
 }

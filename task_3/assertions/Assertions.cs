@@ -4,6 +4,7 @@ using task_3.parser;
 using task_3.vkapi;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading;
+using System;
 
 namespace task_3.assertions
 {
@@ -11,11 +12,10 @@ namespace task_3.assertions
     {
         private IWebDriver driver;
         private SecondPostPage checkPostPage = new SecondPostPage();
-        private VkApiUtils vk = new VkApiUtils();
+        private ParserVkApi vk = new ParserVkApi();
 
         private static ParserEtcApi parser = new ParserEtcApi();
         private string ownerId = parser.GetParameter("ownerId");
-        private string picture = parser.GetParameter("picture");
 
         public Assertions(IWebDriver driver)
         {
@@ -32,6 +32,7 @@ namespace task_3.assertions
         }
         public void EditPostAndCheck(string idOfPost)
         {
+            string picture = vk.GetIdPicture("photos.saveWallPhoto");
             string textOfTheEditedPost = vk.WallEdit("wall.edit", "message", idOfPost, "photo", picture);
             checkPostPage.VisibleElement(driver, textOfTheEditedPost);
             Assert.AreEqual(textOfTheEditedPost, checkPostPage.CheckPostEdit(driver));                               // проверка на соответствие измененного текста

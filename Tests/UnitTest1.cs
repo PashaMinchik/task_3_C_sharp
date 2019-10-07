@@ -16,7 +16,6 @@ namespace Tests
         private FirstVkPage signInPage = new FirstVkPage(driver);
         private SecondPostPage secondPage = new SecondPostPage();
         private Assertions assertOfSecondPage = new Assertions(driver);
-        private ParserVkApi vk = new ParserVkApi();
 
         [TestInitialize]
         public void Initialize()
@@ -27,7 +26,6 @@ namespace Tests
         [TestMethod]
         public void TestApiVk()
         {
-            //vk.GetIdPicture("photos.saveWallPhoto");
             signInPage.InsertLogin();
             signInPage.InsertPassword();
             signInPage.ClickButtonSignIn();
@@ -36,15 +34,14 @@ namespace Tests
             assertOfSecondPage.AddCommentAndCheck(postId);
             secondPage.AddLike(postId);
             secondPage.CheckLike(postId);
-            vk.GetIdPicture("photos.saveWallPhoto");
             secondPage.DeletePost(postId);
         }
 
         [TestCleanup]
         public void CleanUp()
         {
-            confTest.Exit();
-            driver = null;
+            //confTest.Exit();
+            //driver = null;
         }
     }
 }
