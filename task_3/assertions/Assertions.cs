@@ -25,7 +25,6 @@ namespace task_3.assertions
         public string PostOnTheWallAndCheckText()
         {
             string idOfPost = vk.WallPost("wall.post", "message");
-            //Thread.Sleep(6000);
             checkPostPage.VisibleElement(driver, VkApiUtils.textOnTheWall);
             Assert.AreEqual(VkApiUtils.textOnTheWall, checkPostPage.CheckPost(driver));                        // проверка на соответствие текста
             Assert.IsTrue(checkPostPage.CheckUser(driver).Contains("wpt" + ownerId));                        // Проверка, что запись от правильного пользователя 
@@ -34,7 +33,6 @@ namespace task_3.assertions
         public void EditPostAndCheck(string idOfPost)
         {
             string textOfTheEditedPost = vk.WallEdit("wall.edit", "message", idOfPost, "photo", picture);
-            //Thread.Sleep(6000);
             checkPostPage.VisibleElement(driver, textOfTheEditedPost);
             Assert.AreEqual(textOfTheEditedPost, checkPostPage.CheckPostEdit(driver));                               // проверка на соответствие измененного текста
             Assert.IsTrue(checkPostPage.CheckPicture(driver).Contains(picture));                                  // Проверка картинки
@@ -43,7 +41,6 @@ namespace task_3.assertions
         {
             string textComment = vk.AddComment("wall.createComment", "message", idOfPost);
             checkPostPage.VisibleElement(driver, textComment);
-            //Thread.Sleep(6000);
             Assert.IsTrue(checkPostPage.CheckComment(driver) > 0);                                              // проверка того, что комментарий появился
             Assert.IsTrue(checkPostPage.CheckUserComment(driver).Contains(ownerId));                    // проверка, что коммент оставил правильный пользователь
         }

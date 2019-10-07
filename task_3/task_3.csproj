@@ -125,8 +125,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="etcOfTask\BrowserNames.json" />
     <None Include="etcOfTask\EtcApi.json" />
-    <None Include="etcOfTask\Paths.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -54,10 +54,8 @@ namespace task_3.vkapi
     }
     public class ParserVkApi : VkApiUtils
     {
-        //private ParserVkApi vk = new ParserVkApi();
         private static string GetUploadUrl(string methodName)
         {
-            //photos.getWallUploadServer
             WebRequest req = WebRequest.Create(urlApi + methodName + "?" + "access_token=" + token + "&" + "v=" + apiVersion);
             //https://api.vk.com/method/photos.getWallUploadServer?access_token=1b3e1a6668a3cf952a48c40900e2e6672f27919b2bdb4e663ab24eb42300776a80fc388001bd30a5653c3&v=5.101
             WebResponse resp = req.GetResponse();
@@ -66,18 +64,15 @@ namespace task_3.vkapi
             StreamReader sr = new StreamReader(stream);
             string Out = sr.ReadToEnd();
 
-            //Console.WriteLine(Out + "  Весь ответ");
+            Console.WriteLine(Out + "  Весь ответ");
             sr.Close();
             Otvet Otvet = JsonConvert.DeserializeObject<Otvet>(Out);
 
-            //Console.WriteLine(Otvet.response.upload_url + " ссылка для загрузки изображения");
-
+            Console.WriteLine(Otvet.response.upload_url + " ссылка для загрузки изображения");
             return Otvet.response.upload_url;
         }
         private static Tuple<string, string, string> UploadPicture()
         {
-            string uploadUrl = GetUploadUrl("photos.getWallUploadServer");
-
             string pathToFile = @"..\..\..\task_3\Files\svinka.png";
 
             HttpClient httpClient = new HttpClient();
@@ -91,6 +86,7 @@ namespace task_3.vkapi
                 arr = ms.ToArray();
             }
             form.Add(new ByteArrayContent(arr, 0, arr.Count()), "photo", "svinka.png");
+            var uploadUrl = GetUploadUrl("photos.getWallUploadServer");
             HttpResponseMessage response = httpClient.PostAsync(uploadUrl, form).Result;
 
             httpClient.Dispose();
@@ -102,7 +98,7 @@ namespace task_3.vkapi
             return Tuple.Create(Otvet.photo, Otvet.server, Otvet.hash);
         }
 
-        public string SavePicture(string methodName) 
+        public string GetIdPicture(string methodName) 
         {
             var tuple = UploadPicture();
             WebRequest req = WebRequest.Create(urlApi + methodName + "?" + "access_token=" + token + "&" + "v=" + apiVersion + "&" + "photo=" + tuple.Item1 + "&" + "server=" + tuple.Item2 + "&" + "hash=" + tuple.Item3);
@@ -114,8 +110,8 @@ namespace task_3.vkapi
 
             Console.WriteLine(Out + " ответ после сохранения фотографии");
             sr.Close();
-            var Otvet = JsonConvert.DeserializeObject<OtvetForList>(Out);
-            Console.WriteLine(Otvet.response);
+            OtvetForList Otvet = JsonConvert.DeserializeObject<OtvetForList>(Out);
+            Console.WriteLine(Otvet.response[0].id);
             return Out;
         }
     }

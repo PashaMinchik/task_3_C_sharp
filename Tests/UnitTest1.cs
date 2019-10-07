@@ -27,16 +27,17 @@ namespace Tests
         [TestMethod]
         public void TestApiVk()
         {
-            vk.SavePicture("photos.saveWallPhoto");
-            //signInPage.InsertLogin();
-            //signInPage.InsertPassword();
-            //signInPage.ClickButtonSignIn();
-            //string postId = assertOfSecondPage.PostOnTheWallAndCheckText();
-            //assertOfSecondPage.EditPostAndCheck(postId);
-            //assertOfSecondPage.AddCommentAndCheck(postId);
-            //secondPage.AddLike(postId);
-            //secondPage.CheckLike(postId);
-            //secondPage.DeletePost(postId);
+            //vk.GetIdPicture("photos.saveWallPhoto");
+            signInPage.InsertLogin();
+            signInPage.InsertPassword();
+            signInPage.ClickButtonSignIn();
+            string postId = assertOfSecondPage.PostOnTheWallAndCheckText();
+            assertOfSecondPage.EditPostAndCheck(postId);
+            assertOfSecondPage.AddCommentAndCheck(postId);
+            secondPage.AddLike(postId);
+            secondPage.CheckLike(postId);
+            vk.GetIdPicture("photos.saveWallPhoto");
+            secondPage.DeletePost(postId);
         }
 
         [TestCleanup]

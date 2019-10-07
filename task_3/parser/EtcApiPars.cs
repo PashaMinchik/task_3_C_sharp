@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace task_3.parser
@@ -13,6 +13,9 @@ namespace task_3.parser
         public string ownerId { get; set; }
         public string picture { get; set; }
         public string apiVersion { get; set; }
+        public List<string> chromeNames { get; set; }
+        public List<string> foxNames { get; set; }
+
     }
     class PathsPars
     {
@@ -20,10 +23,11 @@ namespace task_3.parser
     }
     class ParserEtcApi
     {
-        string fileName = @"..\..\..\task_3\etcOfTask\EtcApi.json";
+        //string fileName = @"..\..\..\task_3\etcOfTask\EtcApi.json";
 
         public string GetParameter(string parameter)
         {
+            string fileName = @"..\..\..\task_3\etcOfTask\EtcApi.json";
             StreamReader sr = new StreamReader(fileName);
             string Out = sr.ReadToEnd();
             EtcApiPars OtvetName = JsonConvert.DeserializeObject<EtcApiPars>(Out);
@@ -57,6 +61,28 @@ namespace task_3.parser
             }
 
             return result;
+        }
+        public List<string> GetListParameters(string parameter)
+        {
+            string fileName = @"..\..\..\task_3\etcOfTask\BrowserNames.json";
+            StreamReader sr = new StreamReader(fileName);
+            string Out = sr.ReadToEnd();
+            EtcApiPars OtvetName = JsonConvert.DeserializeObject<EtcApiPars>(Out);
+            sr.Close();
+
+            List<string> result = new List<string>();
+
+            switch (parameter)
+            {
+                case "chromeNames":
+                    result = OtvetName.chromeNames;
+                    break;
+                case "foxNames":
+                    result = OtvetName.foxNames;
+                    break;
+            }
+            return result;
+
         }
     }
 }

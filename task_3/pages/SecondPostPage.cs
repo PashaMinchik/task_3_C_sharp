@@ -2,7 +2,6 @@
 using OpenQA.Selenium;
 using task_3.config;
 using task_3.vkapi;
-//using task_3.assertions;
 //using task_3.vkapi;
 
 namespace task_3.pages
