@@ -40,8 +40,8 @@ namespace Tests
         [TestCleanup]
         public void CleanUp()
         {
-            //confTest.Exit();
-            //driver = null;
+            confTest.Exit();
+            driver = null;
         }
     }
 }
